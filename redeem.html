@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Redeem eIDR</title>
+    <meta content="Form dan Prosedur Redeem eIDR" name="description">
+    <meta content="redeem, eIDR, pencairan" name="keywords">
+
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="assets/css/style.css" rel="stylesheet">
+
+ 
+</head>
+
+<body>
+
+    <!-- Mobile nav toggle button -->
+    <button type="button" class="mobile-nav-toggle d-xl-none"><i class="icofont-navigation-menu"></i></button>
+    
+    <!-- Header -->
+    <header id="header" class="d-flex flex-column justify-content-center">
+    
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="index.html"><i class="bx bx-home"></i> <span>Tentang eIDR</span></a></li>
+                <li><a href="explorer.html"><i class="bx bx-search-alt-2"></i> <span>blockchain explorer</span></a></li>
+                <li><a href="explorer.html#recentTransactions"><i class="bx bx-analyse"></i> <span>transaksi terkini</span></a></li>
+                <li><a href="#"><i class="bx bx-compass"></i> <span>Lumbung Network</span></a></li>
+    
+            </ul>
+        </nav><!-- .nav-menu -->
+    
+    </header><!-- End Header -->
+
+    <main id="main">
+        <div class="container" id="form-wrapper">
+            <form id="starterForm">
+
+                <div class="card shadow mx-auto" style="max-width: 768px;">
+                    <img src="assets/img/banner-redeem-eIDR.png" class="card-img-top" alt="banner redeem eIDR">
+                    <div class="card-body">
+                        <p class="card-text">Redeem eIDR adalah proses pencairan Rupiah penjamin token eIDR dengan membakar token
+                            tersebut (mengeluarkannya dari sirkulasi).</p>
+                    </div>
+                </div>
+                <div class="container" id="intro">
+                    <p>Untuk mencairkan Rupiah penjamin token eIDR anda, silakan mengikuti prosedur berikut ini, pastikan anda memiliki akses untuk mentransfer token eIDR tersebut.</p>
+                </div>
+                <div class="container card shadow" id="stockist-vendor-check">
+                    <h6>Apakah anda seorang Stockist/Vendor aktif di ekosistem Lumbung Network?</h4>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="stockist-ya" name="stockist-bukan" class="custom-control-input">
+                        <label class="custom-control-label" for="stockist-ya">Ya</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="stockist-tidak" name="stockist-bukan" class="custom-control-input">
+                        <label class="custom-control-label" for="stockist-tidak">Tidak</label>
+                    </div>
+        
+                </div>
+                <div class="container card shadow" id="verify-stockist-vendor">
+                    <div class="form-group">
+                        <label for="usernameStockist">Username Stockist/Vendor</label>
+                        <input type="text" class="form-control" id="username"
+                            placeholder="Masukkan username">
+                        <small class="form-text text-muted">Masukkan username akun Stockist/Vendor anda.</small>
+                    </div>
+                </div>
+                <div class="container card shadow" id="form-umum">
+                    <div class="form-group">
+                        <label for="nama">Nama</label>
+                        <input type="text" class="form-control" id="nama" placeholder="Masukkan Nama Lengkap anda">
+                        <small class="form-text text-muted">Masukkan nama lengkap anda sesuai yang tertera di rekening bank atau dompet digital anda.</small>
+                    </div><div class="form-group">
+                        <label for="contact">Kontak</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroupPrepend2">@</span>
+                            </div>
+                            <input type="text" class="form-control" id="contact" placeholder="Username TG atau No HP Anda."
+                                aria-describedby="inputGroupPrepend2"><br>
+                            <small class="form-text text-muted">Masukkan username Telegram atau No HP anda.</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="container card shadow" id="form-pencairan">
+                    <div class="form-group">
+                        <label for="nominal-redeem">Jumlah yang ingin dicairkan</label>
+                        <input type="number" min="10000" class="form-control" id="nominal-redeem" placeholder="Nominal eIDR" required>
+                        <small class="form-text text-muted">Minimum pencairan adalah Rp10.000,-</small>
+                    </div>
+                    
+                    <div id="rekening">
+    
+                        <select id="bank" class="custom-select">
+                            <option selected>Pilih Bank</option>
+                            <option value="Mandiri">Bank Mandiri/Syariah Mandiri</option>
+                            <option value="BRI">Bank BRI</option>
+                            <option value="BNI">Bank BNI/BNI Syariah</option>
+                            <option value="BCA">Bank BCA</option>
+                            <option value="BTPN">Bank BTPN/Jenius</option>
+                            <option value="CIMB">Bank CIMB Niaga</option>
+                            <option value="Muamalat">Bank Muamalat</option>
+                            <option value="Permata">Bank Permata/Permata Syariah</option>
+                            <option value="OVO">OVO</option>
+                            <option value="Gopay">Gopay</option>
+                            <option value="DANA">DANA</option>
+                            <option value="LinkAja">LinkAja</option>
+                        </select>
+                        <small class="form-text text-muted">Pilih Bank atau Dompet Digital tujuan pencairan Rupiah anda.</small><br>
+                        <div class="form-group">
+                            <label for="nomor-rekening">No. Rekening</label>
+                            <input type="number" class="form-control" id="noRek"
+                                placeholder="Masukkan No Rek/No HP Dompet Digital">
+                        </div>
+                    </div>
+    
+                </div>
+    
+                <div class="container card shadow" id="prosedur-burning">
+                    <p>Silakan mengirim/transfer token eIDR ke alamat Pembakaran (Burning) di bawah ini sejumlah nominal yang ingin anda cairkan <br><br>WARNING: Pastikan transfer dengan nominal yang sama persis dengan yang anda sebutkan di atas.</p><br>
+                    
+                    <p class="text-center" id="burningAddress"><strong>TLsV52sRDL79HXGGm9yzwKibb6BeruhUzy</strong></p>
+                    <button id="copy-btn" type="button" class="btn btn-primary">Copy</button>
+                    
+                    <figure class="mt-2">
+                        <img src="assets/img/tron-blackhole-address.png" alt="tron blackhole address QRcode" class="img-fluid mx-auto">
+                    </figure>
+    
+                    <p>Gunakan Aplikasi Dompet TRON anda (TronWallet, Tronlink, Tronscan, dll) untuk mentransfer token eIDR anda ke alamat di atas, Copy atau Scan QRcode untuk memudahkan. <br> <br> Video tutorial cara transfer token eIDR untuk prosedur pencairan eIDR dapat dilihat <a href="https://www.youtube.com/watch?v=SfWrWvC1Uuk">di sini</a> </p>
+    
+                </div>
+    
+                <div class="container card shadow" id="verifikasi-hash">
+                    <p>Setelah anda mentransfer token eIDR tersebut, silakan menyalin (copy) kemudian menempelkan (paste) Transaction HASH (bukti transaksi) tersebut di kolom di bawah ini dan menekan tombol Verifikasi</p><br>
+                    
+                    <div class="input-group mb-2">
+                        <input type="text" id="verification-input" class="form-control" placeholder="Tempel HASH transaksi">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary btn-sm" type="button" id="verification-button">Verifikasi</button>
+                        </div>
+                    </div>
+    
+                    <div id="verification-status"></div>
+                </div>
+            </form>
+
+            <div class="container card shadow invisible" id="finalSubmit">
+                <p>Pastikan semua data anda di atas sudah benar sebelum mengirimkan pengajuan Redeem ini dengan menekan tombol di bawah ini:</p><br>
+                <form name="submit-to-db">
+                    <div class="form-group" id="finalForm"></div>
+                    <button id="submitButton" type="submit" class="btn btn-success mx-auto" data-toggle="modal" data-target="#modal">Redeem</button>
+                </form>
+                
+            </div>
+
+            
+
+        </div>
+        
+        
+
+
+    </main><!-- End #main -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="container-fluid modal-header overflow-auto">
+                    <p class="text-break modal-title" id="modal-title">Berhasi!</p>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-success" role="button" href="explorer.html">OK!</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer">
+        <div class="container">
+            <h3>eIDR<br>Lumbung Network</h3>
+            <p>eIDR adalah bagian dari pengembangan <a href="https://lumbung.network/">Lumbung Network</a> yang dikerjakan
+                secara
+                swadaya oleh komunitasnya.
+                <br> </p>
+            
+            <div class="social-links mt-3">
+                <a href="https://twitter.com/lumbungnetwork" class="twitter"><i class="bx bxl-twitter"></i></a>
+                <a href="https.t.me/eidrsupport" class="telegram"><i class="bx bxl-telegram"></i></a>
+                <a href="https://www.youtube.com/channel/UCG8PJWqvFq7naqhmjj75eqA" class="youtube"><i class="bx bxl-youtube"></i></a>
+    
+            </div>
+            <div class="copyright">
+                Brought to life by <a href="https://lumbung.network/">Lumbung Network</a>.
+            </div>
+        </div>
+    </footer><!-- End Footer -->
+
+    <!-- Snackbar -->
+    <div id="snackbar">Alamat berhasil disalin (Copied)!</div>
+    <!-- End Snackbar -->
+
+    <a href="#" class="back-to-top"><i class="bx bx-up-arrow-alt"></i></a>
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/jquery/jquery.min.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+    <script src="assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="https://wzrd.in/standalone/formdata-polyfill"></script>
+    <script src="https://wzrd.in/standalone/promise-polyfill@latest"></script>
+    <script src="https://wzrd.in/standalone/whatwg-fetch@latest"></script>
+
+    <!-- Main JS File -->
+    <script src="assets/js/redeem.js"></script>
+
+
+</body>
+
+</html>

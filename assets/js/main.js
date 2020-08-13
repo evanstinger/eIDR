@@ -137,7 +137,7 @@ function thousands_separators(num) {
           let waktu = formatTime(data.timestamp);
 
           $('#transactionList').append(`
-            <a href="#" class="list-group-item list-group-item-action">
+            <a href="javascript:void(0)" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#searchModal">
               <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">`+ thousands_separators(data.amount / 100) + ` eIDR</h5>
                 <small class="timeago">`+ waktu + `</small>
@@ -156,7 +156,8 @@ function thousands_separators(num) {
       }
 
     });
-    
+
+
     // Activate smooth scroll on page load with hash links in the url
     
     if (window.location.hash) {
@@ -344,10 +345,10 @@ function copy_address() {
   }
 
 //AJAX search HASH//
-function searchHash() {
+function searchHash(hash) {
 
   $('.modal-body').html('');
-  $('#modal-title').text($('#search-input').val());
+  $('#modal-title').text(hash);
   let nominal = '';
   let token = '';
 
@@ -356,7 +357,7 @@ function searchHash() {
     type: 'get',
     dataType: 'json',
     data: {
-      'hash': $('#search-input').val()
+      'hash': hash
     },
     success: function (result) {
       let tipeTransaksi = result.contractData;
@@ -397,7 +398,7 @@ $('#search-button').on('click', function(){
   if ($('#search-input').val().length == 34) {
     searchAddress();
   } else if ($('#search-input').val().length == 64) {
-    searchHash();
+    searchHash($('#search-input').val());
   } else {
     $('#search-input').val('');
     $('#modal-title').text('Ada yang salah, nih!')

@@ -97,6 +97,26 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+/* Redeem Form */
+.card {
+  max-width: 780px;
+  padding: 20px;
+  margin-bottom: 60px;
+}
+
+#form-wrapper {
+  max-width: 768px;
+  padding: 20px;
+}
+
+#verify-stockist-vendor {
+  display: none;
+}
+
+#form-umum {
+  display: none;
+}
+
 /* header */
 #header {
   position: fixed;
