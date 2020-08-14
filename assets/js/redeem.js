@@ -197,11 +197,17 @@ function searchHash(hash, nominalRedeem) {
                     <p class="text-success">Transaksi telah diverifikasi</p>
                 
                 `);
+                setTimeout(function () {
+                    $('#finalSubmit').show();
+                    $('#submitButton').prop('disabled', false);
+                }, 400);
             } else {
                 $('#verification-status').html(`
-                    <p class="text-danger">HASH yang anda masukkan salah atau telah di Redeem</p>
+                    <p class="text-danger">Ada yang salah! Periksa Nominal dan HASH anda!</p>
                 
                 `);
+                $('#submitButton').prop('disabled', true);
+                $('#finalSubmit').hide();
             }
 
            
@@ -251,10 +257,6 @@ $('#verification-button').on('click', function () {
             <input type="text" class="form-control" name="hash" value="`+ $('#verification-input').val() + `" readonly>
             
         `);
-
-        setTimeout(function(){
-            $('#finalSubmit').removeClass("invisible");
-        }, 1200);
         
     } else {
         $('#verification-input').val('');
