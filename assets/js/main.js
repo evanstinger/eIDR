@@ -137,7 +137,7 @@ function thousands_separators(num) {
           let waktu = formatTime(data.timestamp);
 
           $('#transactionList').append(`
-            <a href="javascript:void(0)" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#searchModal">
+            <a data-alias="`+ data.transactionHash +`" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#searchModal">
               <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">`+ thousands_separators(data.amount / 100) + ` eIDR</h5>
                 <small class="timeago">`+ waktu + `</small>
@@ -156,6 +156,31 @@ function thousands_separators(num) {
       }
 
     });
+
+    //using alias to get transaction detail from list-group
+    $("#transactionList").on("click", "a", function (event) {
+      event.preventDefault();
+      searchHash($(this).data('alias'));
+    });
+
+    // $('.list-group a').on('click', function () {
+    //   var $this = $(this);
+    //   var $alias = $this.data('alias');
+
+    //   $('.active').removeClass('active');
+    //   $this.toggleClass('active')
+
+    //   // Pass clicked link element to another function
+    //   myfunction($this, $alias)
+    // })
+
+    // function myfunction($this, $alias) {
+    //   console.log($this.text());  // Will log Paris | France | etc...
+
+    //   console.log($alias);  // Will output whatever is in data-alias=""
+    // }
+
+    
 
 
     // Activate smooth scroll on page load with hash links in the url
