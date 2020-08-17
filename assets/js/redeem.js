@@ -218,6 +218,28 @@ function searchHash(hash, nominalRedeem) {
 
 }
 
+//AJAX call Telegram API bots for notif
+function sendTelegramNotif() {
+
+    let telegramMessage = `
+        Seseorang telah Redeem eIDR!
+        Nama: *`+ $('#username').val() + $('#nama').val() +`*
+        Jumlah: *Rp. `+ $('#nominal-redeem').val() +`*
+        Hash: [`+ $('#verification-input').val() + `](https://tronscan.org/#/transaction/` + $('#verification-input').val() + `)
+        `;
+
+    $.ajax({
+        url: 'https://api.telegram.org/bot1300893823:AAEVqR9u4uPW8E0KPaNUD6Yh463XxFqmfhM/sendMessage',
+        type: 'get',
+        dataType: 'json',
+        data: {
+            'chat_id': '365874331',
+            'text': telegramMessage,
+            'parse_mode': 'markdown'
+        }
+    })
+}
+
 //Search Button Function
 $('#verification-button').on('click', function () {
     //Check if input === HASH
@@ -280,4 +302,6 @@ $('#submitButton').on('click', function(){
         <p>Pengajuan Redeem eIDR anda telah berhasil. <br>
         Anda akan menerima Rupiah tersebut di Rekening/Dompet Digital anda kurang dari 24 jam ke depan (Max. 48 jam di luar hari kerja).</p>
     `)
+    sendTelegramNotif();
 });
+
