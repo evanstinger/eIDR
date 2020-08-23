@@ -109,12 +109,13 @@ h1, h2, h3, h4, h5, h6 {
   padding: 20px;
 }
 
-#verify-stockist-vendor {
+#verify-stockist-vendor, #form-umum, #prosedur-burning, #verifikasi-hash, #finalSubmit {
   display: none;
 }
 
-#form-umum {
-  display: none;
+#burningAddress {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 200;
 }
 
 /* header */

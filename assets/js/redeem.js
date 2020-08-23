@@ -1,4 +1,3 @@
-
 !(function ($) {
     "use strict";
 
@@ -42,7 +41,7 @@
 
     $(document).ready(function () {
 
-        //form function
+        //form radio function
         $('input[type="radio"]').click(function () {
             if ($(this).attr('id') == 'stockist-ya') {
                 $('#verify-stockist-vendor').show();
@@ -56,6 +55,7 @@
             }
         });
 
+        //submit finalForm to Google Sheet
         const scriptURL = 'https://script.google.com/macros/s/AKfycbyJ2AdqoEPcGT_7DP_w8niZ23DX2FlJnZsG8x3sXBZf8Lgp9w-s/exec'
         const form = document.forms['submit-to-db']
 
@@ -67,7 +67,6 @@
         })
 
         // Activate smooth scroll on page load with hash links in the url
-
         if (window.location.hash) {
             var initial_nav = window.location.hash;
             if ($(initial_nav).length) {
@@ -79,6 +78,7 @@
         }
     });
 
+    //mobile nav button
     $(document).on('click', '.mobile-nav-toggle', function (e) {
         $('body').toggleClass('mobile-nav-active');
         $('.mobile-nav-toggle i').toggleClass('icofont-navigation-menu icofont-close');
@@ -188,11 +188,8 @@ function searchHash(hash, nominalRedeem) {
         success: function (result) {
             let transaksi = result.contractData;
             let nominalTransaksi = transaksi.amount / 100;
-            //get current timestamp
-            let today = new Date();
-            let oneDayPeriodLimit = today.getTime() - 86400000;
             
-            if (transaksi.asset_name == "1002652" && nominalTransaksi == nominalRedeem && result.toAddress == "TLsV52sRDL79HXGGm9yzwKibb6BeruhUzy" && Number(result.timestamp) > Number(oneDayPeriodLimit) ) {
+            if (transaksi.asset_name == "1002652" && nominalTransaksi == nominalRedeem && result.toAddress == "TLsV52sRDL79HXGGm9yzwKibb6BeruhUzy"  ) {
                 $('#verification-status').html(`
                     <p class="text-success">Transaksi telah diverifikasi</p>
                 
@@ -208,14 +205,9 @@ function searchHash(hash, nominalRedeem) {
                 `);
                 $('#submitButton').prop('disabled', true);
                 $('#finalSubmit').hide();
-            }
-
-           
+            }  
         },
     });
-
-    
-
 }
 
 //AJAX call Telegram API bots for notif
@@ -240,68 +232,117 @@ function sendTelegramNotif() {
     })
 }
 
-//Search Button Function
-$('#verification-button').on('click', function () {
-    //Check if input === HASH
-    if ($('#verification-input').val().length == 64) {
-        searchHash($('#verification-input').val(), $('#nominal-redeem').val());
-        $('#finalForm').html(`
+//verify and populate final form function
+function verify() {
+    searchHash($('#verification-input').val(), $('#nominal-redeem').val());
+    $('#finalForm').html(`
             <div class="row">
                 <div class="col">
                     <label for="username">Username</label>
-                    <input type="text" class="form-control" name="username" value="`+ $('#username').val() + `" readonly>
+                    <input type="text" class="form-control" name="username" value="` + $('#username').val() + `" readonly>
                     <small class="form-text text-muted">Username hanya diperlukan apabila Anda adalah Stockist/Vendor.</small>
                 </div>
                 <div class="col">
                     <label for="nominal">Nominal</label>
-                    <input type="text" class="form-control" name="nominal" value="`+ $('#nominal-redeem').val() + `" readonly>
+                    <input type="text" class="form-control" name="nominal" value="` + $('#nominal-redeem').val() + `" readonly>
                 </div>
             </div><br>
             <div class="row">
                 <div class="col">
                     
                     <label for="nama">Nama</label>
-                    <input type="text" class="form-control" name="nama" value="`+ $('#nama').val() + `" readonly><br>
+                    <input type="text" class="form-control" name="nama" value="` + $('#nama').val() + `" readonly><br>
                     <label for="contact">Contact</label>
-                    <input type="text" class="form-control" name="contact" value="`+ $('#contact').val() + `" readonly>
+                    <input type="text" class="form-control" name="contact" value="` + $('#contact').val() + `" readonly>
                 </div>
                 <div class="col">
                     
                     <label for="bank">Bank</label>
-                    <input type="text" class="form-control" name="bank" value="`+ $('#bank').val() + `" readonly><br>
+                    <input type="text" class="form-control" name="bank" value="` + $('#bank').val() + `" readonly><br>
                     <label for="noRek">No Rekening</label>
-                    <input type="text" class="form-control" name="noRek" value="`+ $('#noRek').val() + `" readonly>
+                    <input type="text" class="form-control" name="noRek" value="` + $('#noRek').val() + `" readonly>
                 </div>
             </div>
             
             
             <label for="hash">Transaction HASH</label>
-            <input type="text" class="form-control" name="hash" value="`+ $('#verification-input').val() + `" readonly>
+            <input type="text" class="form-control" name="hash" value="` + $('#verification-input').val() + `" readonly>
             
         `);
-        
-    } else {
-        $('#verification-input').val('');
-        $('#verification-status').html(`
-      <p>ERROR! Periksa kembali Hash yang anda masukkan.</p>
+}
+
+//monitor and clean HASH input
+$('#verification-input').change(async function () {
+    
+    $('#verification-status').html(`
+         <p class="text-warning">Sedang memproses...</p>
     `);
-    }
 
-});
-
-$('#verification-input').change(function () {
-
+    //clean the Tronscan baseURL from copied Hash
     if ($('#verification-input').val().includes('tronscan')) {
         let hashOnly = $('#verification-input').val().split('/')[5];
         $('#verification-input').val(hashOnly);
     }
+    
+
+
 })
 
+//Verify Button Function
+$('#verification-button').on('click', async function () {
+    let found;
+    //check HASH length
+    if ($('#verification-input').val().length == 64) {
+
+        //check redeemed hash from Google Sheet db
+        await $.ajax({
+            url: 'https://spreadsheets.google.com/feeds/list/1SFTGurB6jjGKgy2RAF5-eN9wIkTSceCh-ouKsR9pBZI/1/public/full?alt=json',
+            type: 'get',
+            dataType: 'json',
+            data: '',
+            success: function (result) {
+                let data = result.feed.entry;
+                found = data.some(el => el.gsx$hash.$t === $('#verification-input').val());
+            }
+
+        });
+
+        if (!found) {
+            verify();
+        } else {
+            $('#verification-status').html(`
+                <p class="text-danger">ERROR! Hash SUDAH PERNAH di Reedem.</p>
+            `);
+            $('#submitButton').prop('disabled', true);
+            $('#finalSubmit').hide();
+        }
+    } else {
+        $('#verification-input').val('');
+        $('#verification-status').html(`
+            <p class="text-danger">ERROR! Periksa kembali Hash yang anda masukkan.</p>
+        `);
+    }
+    
+});
+
+//Nominal Redeem Validator
+$("#nominal-redeem").keyup(function () {
+    if ($('#nominal-redeem').val() < 10000 ) {
+        $('#errorMsg').show();
+    }
+    else {
+        $('#errorMsg').hide();
+        $('#prosedur-burning').show();
+        $('#verifikasi-hash').show();
+    }
+});
+
+
+// Send Telegram Bot Notif on Submit
 $('#submitButton').on('click', function(){
     $('.modal-body').html(`
         <p>Pengajuan Redeem eIDR anda telah berhasil. <br>
-        Anda akan menerima Rupiah tersebut di Rekening/Dompet Digital anda kurang dari 24 jam ke depan (Max. 48 jam di luar hari kerja).</p>
+        Anda akan menerima Rupiah tersebut di Rekening/Dompet Digital anda dalam 24 jam ke depan (Max. 48 jam di luar hari kerja).</p>
     `)
     sendTelegramNotif();
 });
-

@@ -43,7 +43,7 @@
                 <li><a href="index.html"><i class="bx bx-home"></i> <span>Tentang eIDR</span></a></li>
                 <li><a href="explorer.html"><i class="bx bx-search-alt-2"></i> <span>blockchain explorer</span></a></li>
                 <li><a href="explorer.html#recent-transactions"><i class="bx bx-analyse"></i> <span>transaksi terkini</span></a></li>
-                <li><a href="#"><i class="bx bx-compass"></i> <span>Lumbung Network</span></a></li>
+                <li><a href="https://lumbung.network"><i class="bx bx-compass"></i> <span>Lumbung Network</span></a></li>
     
             </ul>
         </nav><!-- .nav-menu -->
@@ -97,7 +97,8 @@
                             </div>
                             <input type="text" class="form-control" id="contact" placeholder="Username TG atau No HP Anda."
                                 aria-describedby="inputGroupPrepend2"><br>
-                            <small class="form-text text-muted">Masukkan username Telegram atau No HP anda.</small>
+                            <small class="form-text text-muted">Masukkan username Telegram atau No HP anda.</small><br>
+                            <small class="form-text text-muted">Anda akan dikenakan biaya layanan Rp2.500,-.</small>
                         </div>
                     </div>
                 </div>
@@ -106,6 +107,7 @@
                         <label for="nominal-redeem">Jumlah yang ingin dicairkan</label>
                         <input type="number" min="10000" class="form-control" id="nominal-redeem" placeholder="Nominal eIDR" required>
                         <small class="form-text text-muted">Minimum pencairan adalah Rp10.000,-</small>
+                        <span class="text-danger" id="errorMsg" style="display:none;">Belum mencukupi minimum pencairan!</span>
                     </div>
                     
                     <div id="rekening">
@@ -136,14 +138,15 @@
                 </div>
     
                 <div class="container card shadow" id="prosedur-burning">
-                    <p>Silakan mengirim/transfer token eIDR ke alamat Pembakaran (Burning) di bawah ini sejumlah nominal yang ingin anda cairkan <br><br>WARNING: Pastikan transfer dengan nominal yang sama persis dengan yang anda sebutkan di atas.</p><br>
+                    <p>Silakan mengirim/transfer token eIDR ke alamat Pembakaran (Burning) di bawah ini sejumlah nominal yang ingin anda cairkan. <br></p>
+                    <small class="text-danger">WARNING: Pastikan transfer dengan nominal yang sama persis dengan yang anda sebutkan di atas.</small><br><br>
                     
-                    <p class="text-center" id="burningAddress"><strong>TLsV52sRDL79HXGGm9yzwKibb6BeruhUzy</strong></p>
-                    <button id="copy-btn" type="button" class="btn btn-primary">Copy</button>
-                    
-                    <figure class="mt-2">
-                        <img src="assets/img/tron-blackhole-address.png" alt="tron blackhole address QRcode" class="img-fluid mx-auto">
-                    </figure>
+                    <div class="d-flex flex-column justify-content-center">
+
+                        <p class="text-center bg-light" id="burningAddress">TLsV52sRDL79HXGGm9yzwKibb6BeruhUzy</p>
+                        <button id="copy-btn" type="button" class="m-2 btn btn-primary btn-sm">Copy</button>
+                        <img class="mx-auto" src="assets/img/tron-blackhole-address.png" alt="tron blackhole address QRcode" style="max-width: 200px;">
+                    </div>
     
                     <p>Gunakan Aplikasi Dompet TRON anda (TronWallet, Tronlink, Tronscan, dll) untuk mentransfer token eIDR anda ke alamat di atas, Copy atau Scan QRcode untuk memudahkan. <br> <br> Video tutorial cara transfer token eIDR untuk prosedur pencairan eIDR dapat dilihat <a href="https://www.youtube.com/watch?v=SfWrWvC1Uuk">di sini</a> </p>
     
@@ -163,7 +166,7 @@
                 </div>
             </form>
 
-            <div class="container card shadow" id="finalSubmit" style="display: none;">
+            <div class="container card shadow" id="finalSubmit">
                 <p>Pastikan semua data anda di atas sudah benar sebelum mengirimkan pengajuan Redeem ini dengan menekan tombol di bawah ini:</p><br>
                 <form name="submit-to-db">
                     <div class="form-group" id="finalForm"></div>
@@ -203,7 +206,7 @@
     </div>
 
 
-    <!-- ======= Footer ======= -->
+    <!-- Footer -->
     <footer id="footer">
         <div class="container">
             <h3>eIDR<br>Lumbung Network</h3>
