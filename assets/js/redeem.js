@@ -233,9 +233,8 @@ function sendTelegramNotif() {
     })
 }
 
-//verify and populate final form function
-function verify() {
-    searchHash($('#verification-input').val(), $('#nominal-redeem').val());
+//populate final form function
+function populateFinalForm(hash) {
     $('#finalForm').html(`
             <div class="row">
                 <div class="col">
@@ -267,9 +266,15 @@ function verify() {
             
             
             <label for="hash">Transaction HASH</label>
-            <input type="text" class="form-control" name="hash" value="` + $('#verification-input').val() + `" readonly>
+            <input type="text" class="form-control" name="hash" value="` + hash + `" readonly>
             
         `);
+}
+
+//verify and run populate final form function
+function verify() {
+    searchHash($('#verification-input').val(), $('#nominal-redeem').val());
+    populateFinalForm($('#verification-input').val());
 }
 
 //monitor and clean HASH input
@@ -333,10 +338,52 @@ $("#nominal-redeem").keyup(function () {
     }
     else {
         $('#errorMsg').hide();
-        $('#prosedur-burning').show();
-        $('#verifikasi-hash').show();
+        if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
+            $('#tronweb-enabled').show();
+        } else {
+            $('#prosedur-burning').show();
+            $('#verifikasi-hash').show();
+        }
+        
     }
 });
+
+//Burning by TronWeb service
+$('#burning-button').click( async function() {
+    
+    const userAddress = tronWeb.defaultAddress.base58;
+    const toAddress = 'TLsV52sRDL79HXGGm9yzwKibb6BeruhUzy';
+    let sendAmount = $('#nominal-redeem').val() * 100;
+    var tronweb = window.tronWeb;
+    try {
+        var tx = await tronweb.transactionBuilder.sendAsset(toAddress, sendAmount, '1002652', userAddress);
+        var signedTx = await tronweb.trx.sign(tx);
+        var broastTx = await tronweb.trx.sendRawTransaction(signedTx);
+        if (broastTx.result) {
+            alert('Transaksi Berhasil!');
+            console.log(broastTx.txid);
+            populateFinalForm(broastTx.txid);
+            $('#submitButton').prop('disabled', false);
+            $('#finalSubmit').show();
+            $('#tronweb-enabled').hide();
+        } else {
+            alert('Transaksi Gagal! Cek kembali koneksi anda lalu ulangi');
+        }
+    }catch (e) {
+        if (e.includes('assetBalance is not sufficient')) {
+            alert('Saldo eIDR tidak mencukupi');
+        }
+        
+    }
+    
+})
+
+//Opsi Manual Transfer
+$('#manual-transfer').on('click', function() {
+    $('#prosedur-burning').show();
+    $('#verifikasi-hash').show();
+    $('#tronweb-enabled').hide();
+})
 
 
 // Send Telegram Bot Notif on Submit

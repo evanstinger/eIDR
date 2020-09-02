@@ -109,7 +109,7 @@ h1, h2, h3, h4, h5, h6 {
   padding: 20px;
 }
 
-#verify-stockist-vendor, #form-umum, #prosedur-burning, #verifikasi-hash, #finalSubmit {
+#verify-stockist-vendor, #form-umum, #prosedur-burning, #verifikasi-hash, #finalSubmit, #tronweb-enabled {
   display: none;
 }
 
