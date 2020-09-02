@@ -59,64 +59,74 @@ function thousands_separators(num) {
 
   
   $(document).ready(function() {
-    
-
-    let mintedSupply = '';
-    let burnedSupply = '';
-    let transactions = '';
-    let holders = '';
 
     //calling eIDR TRC10 information
+    async function callTokenInfo() {
 
-    $.ajax({
-
-      url: 'https://apilist.tronscan.org/api/token',
-      type: 'get',
-      dataType: 'json',
-      data: {
-        'id': '1002652'
-      },
-      success: function (result) {
-        setTimeout(function () {
-          //calling mintedSupply
-          mintedSupply += result.data[0].issued / 100;
-          $('#minted').html(thousands_separators(mintedSupply));
-
+      $.ajax({
+  
+        url: 'https://apilist.tronscan.org/api/token',
+        type: 'get',
+        dataType: 'json',
+        data: {
+          'id': '1002652'
+        },
+        success: function (result) {
+          //take minted Supply put it to ghost element
+          let mintedSupply = result.data[0].issued / 100;
+          $('#minted-ghost').html(mintedSupply);
           //calling transactions
-          transactions += result.data[0].totalTransactions;
+          let transactions = result.data[0].totalTransactions;
           $('#transactions').html(thousands_separators(transactions));
           //calling Holders
-          holders += result.data[0].nrOfTokenHolders;
+          let holders = result.data[0].nrOfTokenHolders;
           $('#holders').html(thousands_separators(holders));
-        }, 1000);
+  
+        }
+      });
+    }
 
-      }
-    });
 
     //calling burnedSupply
+    async function callBurnedSupply() {
 
-    $.ajax({
+      $.ajax({
+  
+        url: 'https://apilist.tronscan.org/api/account',
+        type: 'get',
+        dataType: 'json',
+        data: {
+          'address': 'TLsV52sRDL79HXGGm9yzwKibb6BeruhUzy'
+        },
+        success: function (result) {
+          //take burned supply put it to ghost element
+          let burnedSupply = result.balances[617].balance / 100;
+          $('#burned-ghost').html(burnedSupply);
+        }
+  
+      });
+    }
 
-      url: 'https://apilist.tronscan.org/api/account',
-      type: 'get',
-      dataType: 'json',
-      data: {
-        'address': 'TLsV52sRDL79HXGGm9yzwKibb6BeruhUzy'
-      },
-      success: function (result) {
-        setTimeout(function () {
-          burnedSupply += result.balances[617].balance / 100;
-          $('#burned').html(thousands_separators(burnedSupply));
-        }, 1000);
+    //finalize counters data
+    async function populateCounters() {
+      let minted = $('#minted-ghost').html();
+      let burned = $('#burned-ghost').html();
+      let circulating = minted - burned;
 
-        setTimeout(function(){
-          $('#circulating').html(thousands_separators(mintedSupply - burnedSupply))
-        },1200)
+      // let circulating = mintedSupply - burnedSupply;
+      $('#circulating').html(thousands_separators(circulating.toFixed(2)));
+      $('#minted').html(thousands_separators(minted));
+      $('#burned').html(thousands_separators(burned));
+    }
 
-      }
-
-    });
-
+    //execute counters chain
+    setTimeout(() => {
+      callTokenInfo()
+        .then(() => callBurnedSupply())
+        .then(() => populateCounters())
+        .catch(console.log);
+    }, 1000)
+ 
     //calling latestTransactions
     $.ajax({
 
@@ -355,7 +365,7 @@ function copy_address() {
 function searchHash(hash) {
 
   $('.modal-body').html('');
-  $('#modal-title').text(hash);
+  $('#modal-title').html(`<h4>Detail Transaksi</h4>`);
   let nominal = '';
   let token = '';
 
@@ -390,6 +400,7 @@ function searchHash(hash) {
             <li class="list-group-item">Waktu Transaksi: `+ waktu + ` </li>
             <li class="list-group-item">Status Konfirmasi: `+ result.confirmed + `</li>
             <li class="list-group-item">Keterangan: `+ result.data + `</li>
+            <li class="list-group-item text-break">Hash: `+ hash + `</li>
           </ul>
         `)
     },
