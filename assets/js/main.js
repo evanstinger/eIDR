@@ -109,14 +109,17 @@ function thousands_separators(num) {
 
     //finalize counters data
     async function populateCounters() {
-      let minted = $('#minted-ghost').html();
-      let burned = $('#burned-ghost').html();
-      let circulating = minted - burned;
+      setTimeout( () => {
+        let minted = $('#minted-ghost').html();
+        let burned = $('#burned-ghost').html();
+        let circulating = minted - burned;
 
-      // let circulating = mintedSupply - burnedSupply;
-      $('#circulating').html(thousands_separators(circulating.toFixed(2)));
-      $('#minted').html(thousands_separators(minted));
-      $('#burned').html(thousands_separators(burned));
+        // let circulating = mintedSupply - burnedSupply;
+        $('#circulating').html(thousands_separators(circulating.toFixed(2)));
+        $('#minted').html(thousands_separators(minted));
+        $('#burned').html(thousands_separators(burned));
+      },1000)
+      
     }
 
     //execute counters chain

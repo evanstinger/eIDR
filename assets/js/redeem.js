@@ -211,6 +211,7 @@ function searchHash(hash, nominalRedeem) {
 }
 
 //AJAX call Telegram API bots for notif
+const tgAk = config.TG_AK;
 function sendTelegramNotif() {
 
     let telegramMessage = `
@@ -221,7 +222,7 @@ function sendTelegramNotif() {
         `;
 
     $.ajax({
-        url: 'https://api.telegram.org/bot1300893823:AAEVqR9u4uPW8E0KPaNUD6Yh463XxFqmfhM/sendMessage',
+        url: 'https://api.telegram.org/bot' + tgAk + '/sendMessage',
         type: 'get',
         dataType: 'json',
         data: {
