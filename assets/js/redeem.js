@@ -372,6 +372,10 @@ $('#burning-button').click( async function() {
     }catch (e) {
         if (e.includes('assetBalance is not sufficient')) {
             alert('Saldo eIDR tidak mencukupi');
+        } else if (e.includes('assetBalance must be greater than')) {
+            alert('Alamat TRON ini tidak memiliki eIDR');
+        } else {
+            console.log(e)
         }
         
     }

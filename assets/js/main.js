@@ -60,8 +60,16 @@ function thousands_separators(num) {
   
   $(document).ready(function() {
 
+    var tokenInfo;
+    let minted;
+    let transactions;
+    let holders;
+    let burnedSupply;
+    let burned;
+    let circulating;
+
     //calling eIDR TRC10 information
-    async function callTokenInfo() {
+    function callTokenInfo() {
 
       $.ajax({
   
@@ -72,15 +80,10 @@ function thousands_separators(num) {
           'id': '1002652'
         },
         success: function (result) {
-          //take minted Supply put it to ghost element
-          let mintedSupply = result.data[0].issued / 100;
-          $('#minted-ghost').html(mintedSupply);
-          //calling transactions
-          let transactions = result.data[0].totalTransactions;
-          $('#transactions').html(thousands_separators(transactions));
-          //calling Holders
-          let holders = result.data[0].nrOfTokenHolders;
-          $('#holders').html(thousands_separators(holders));
+          //push ajax call result to global var
+          tokenInfo = result.data[0];
+          // callback function to push result after ajax success
+          useTokenInfo();
   
         }
       });
@@ -88,7 +91,7 @@ function thousands_separators(num) {
 
 
     //calling burnedSupply
-    async function callBurnedSupply() {
+    function callBurnedSupply() {
 
       $.ajax({
   
@@ -99,35 +102,53 @@ function thousands_separators(num) {
           'address': 'TLsV52sRDL79HXGGm9yzwKibb6BeruhUzy'
         },
         success: function (result) {
-          //take burned supply put it to ghost element
-          let burnedSupply = result.balances[617].balance / 100;
-          $('#burned-ghost').html(burnedSupply);
+          //push result to global var
+          burnedSupply = result.balances[617].balance / 100;
+          // callback
+          useBurnedSupply();
         }
   
       });
     }
 
-    //finalize counters data
-    async function populateCounters() {
-      setTimeout( () => {
-        let minted = $('#minted-ghost').html();
-        let burned = $('#burned-ghost').html();
-        let circulating = minted - burned;
-
-        // let circulating = mintedSupply - burnedSupply;
-        $('#circulating').html(thousands_separators(circulating.toFixed(2)));
-        $('#minted').html(thousands_separators(minted));
-        $('#burned').html(thousands_separators(burned));
-      },1000)
+    function useTokenInfo() {
+      //set mintedSupply
+      minted = tokenInfo.issued / 100;
       
+      //set transactions
+      transactions = tokenInfo.totalTransactions;
+      
+      //set Holders
+      holders = tokenInfo.nrOfTokenHolders;
+      
+    }
+
+    function useBurnedSupply() {
+      //set burned
+      burned = burnedSupply;
+
+    }
+
+    //use global vars to populare numbers
+    function populateCounters() {
+      circulating = minted - burned;
+      $('#minted').html(thousands_separators(minted));
+      $('#transactions').html(thousands_separators(transactions));
+      $('#holders').html(thousands_separators(holders));
+      $('#burned').html(thousands_separators(burned));
+      $('#circulating').html(thousands_separators(circulating.toFixed(2)));
+    }
+
+    function runCounters() {
+      callTokenInfo();
+      callBurnedSupply();
+      setTimeout(() => { populateCounters();},1500)
+
     }
 
     //execute counters chain
     setTimeout(() => {
-      callTokenInfo()
-        .then(() => callBurnedSupply())
-        .then(() => populateCounters())
-        .catch(console.log);
+      runCounters();
     }, 1000)
  
     //calling latestTransactions
