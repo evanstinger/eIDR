@@ -142,14 +142,12 @@ function thousands_separators(num) {
     function runCounters() {
       callTokenInfo();
       callBurnedSupply();
-      setTimeout(() => { populateCounters();},1500)
+      setTimeout(() => { populateCounters();},2500)
 
     }
 
     //execute counters chain
-    setTimeout(() => {
-      runCounters();
-    }, 1000)
+    runCounters();
  
     //calling latestTransactions
     $.ajax({
