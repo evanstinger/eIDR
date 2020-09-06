@@ -335,6 +335,10 @@ $('#verification-button').on('click', async function () {
 $("#nominal-redeem").keyup(function () {
     if ($('#nominal-redeem').val() < 10000 ) {
         $('#errorMsg').show();
+        $('#prosedur-burning').hide();
+        $('#verifikasi-hash').hide();
+        $('#submitButton').prop('disabled', true);
+
     }
     else {
         $('#errorMsg').hide();
