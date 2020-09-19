@@ -103,6 +103,9 @@
                     </div>
                 </div>
                 <div class="container card shadow" id="form-pencairan">
+                    <div id="saldo-eidr">
+                        
+                    </div>
                     <div class="form-group">
                         <label for="nominal-redeem">Jumlah yang ingin dicairkan</label>
                         <input type="number" min="10000" class="form-control" id="nominal-redeem" placeholder="Nominal eIDR" required>
@@ -175,7 +178,7 @@
 
             <div class="container card shadow" id="finalSubmit">
                 <p>Pastikan semua data anda di atas sudah benar sebelum mengirimkan pengajuan Redeem ini dengan menekan tombol di bawah ini:</p><br>
-                <form name="submit-to-db">
+                <form name="submit-to-db" id="submit-to-db">
                     <div class="form-group" id="finalForm"></div>
                     <button id="submitButton" type="submit" class="btn btn-success mx-auto" data-toggle="modal" data-target="#modal">Redeem</button>
                 </form>
