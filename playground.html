@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>PlayGround Sandbox</title>
+    <meta content="PlayGround" name="description">
+
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="assets/css/style.css" rel="stylesheet">
+
+ 
+</head>
+
+<body>
+
+    <!-- Mobile nav toggle button -->
+    <button type="button" class="mobile-nav-toggle d-xl-none"><i class="icofont-navigation-menu"></i></button>
+    
+    <!-- Header -->
+    <header id="header" class="d-flex flex-column justify-content-center">
+    
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="index.html"><i class="bx bx-home"></i> <span>Tentang eIDR</span></a></li>
+                <li><a href="explorer.html"><i class="bx bx-search-alt-2"></i> <span>blockchain explorer</span></a></li>
+                <li><a href="explorer.html#recent-transactions"><i class="bx bx-analyse"></i> <span>transaksi terkini</span></a></li>
+                <li><a href="https://lumbung.network"><i class="bx bx-compass"></i> <span>Lumbung Network</span></a></li>
+    
+            </ul>
+        </nav><!-- .nav-menu -->
+    
+    </header><!-- End Header -->
+
+    <main id="main">
+    <div class="card">
+    <div class="row">
+                                <div class="col-xl-12 col-xs-12">
+                                    <fieldset class="form-group">
+                                        <label for="user_name">Masukan No. Token Listrik</label>
+                                        <input type="text" class="form-control" name="no_hp" id="no_hp" autocomplete="off" placeholder="No.">
+                                    </fieldset>
+                                    <button class="btn btn-lg btn-success btn-block" onClick="getInquiry()">Cek Data Pelanggan</button>
+                                </div>
+                            </div>
+    </div>
+        
+    </main><!-- End #main -->
+
+       <!-- Footer -->
+    <footer id="footer">
+        <div class="container">
+            <h3>eIDR<br>Lumbung Network</h3>
+            <p>eIDR adalah bagian dari pengembangan <a href="https://lumbung.network/">Lumbung Network</a> yang dikerjakan
+                secara
+                swadaya oleh komunitasnya.
+                <br> </p>
+            
+            <div class="social-links mt-3">
+                <a href="https://twitter.com/lumbungnetwork" class="twitter"><i class="bx bxl-twitter"></i></a>
+                <a href="https.t.me/eidrsupport" class="telegram"><i class="bx bxl-telegram"></i></a>
+                <a href="https://www.youtube.com/channel/UCG8PJWqvFq7naqhmjj75eqA" class="youtube"><i class="bx bxl-youtube"></i></a>
+    
+            </div>
+            <div class="copyright">
+                Brought to life by <a href="https://lumbung.network/">Lumbung Network</a>.
+            </div>
+        </div>
+    </footer><!-- End Footer -->
+
+    <!-- Snackbar -->
+    <div id="snackbar">Alamat berhasil disalin (Copied)!</div>
+    <!-- End Snackbar -->
+
+    <a href="#" class="back-to-top"><i class="bx bx-up-arrow-alt"></i></a>
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/jquery/jquery.min.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+    <script src="assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="https://wzrd.in/standalone/formdata-polyfill"></script>
+    <script src="https://wzrd.in/standalone/promise-polyfill@latest"></script>
+    <script src="https://wzrd.in/standalone/whatwg-fetch@latest"></script>
+
+    <!-- Main JS File -->
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/redeem.js"></script>
+    <script>
+      function getInquiry() {
+            var customer_no = $("#no_hp").val();
+            var jsondata = {command: "pln-subscribe", customer_no: customer_no};
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                cors: true ,
+                contentType:'application/json',
+                secure: true,
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                },
+                data: JSON.stringify(jsondata),
+                url: "https://cors-proxy.htmldriven.com/?https://api.digiflazz.com/v1/transaction",
+                success: function (result) {
+                    alert('OK');
+                    console.log(result);
+                }
+            });
+
+        }
+    </script>
+
+
+</body>
+
+</html
